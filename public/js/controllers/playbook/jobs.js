@@ -24,6 +24,22 @@ define([
 		$scope.runJob = function (job) {
 			job.run($scope.playbook);
 		}
+
+		// Edit host
+        $scope.editJob = function(job) {
+          $scope.editing = job;
+        }
+
+        // Update existing hostgroup
+        $scope.save = function (job) {
+            job.save($scope.playbook, job).success(function (data, status, headers) {
+            })
+            .error(function (data, status, header, config) {
+                $scope.ServerResponse = data;
+                console.log(data);
+            });
+        };
+
 	}]);
 
 	app.registerController('AddJobCtrl', ['$scope', 'Job', 'jobs', function($scope, Job, jobs) {

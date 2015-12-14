@@ -9,11 +9,18 @@ table.table.table-hover
             th &nbsp;
     tbody
         tr(ng-repeat="job in jobs.jobs")
-            td {{ job.data.name }}
+            td
+                span(ng-hide="editMode")
+                    {{ job.data.name }}
+                input.form-control(id='name{{$index}}', type='text', ng-show='editMode', ng-model='job.data.name')
             td {{ job.data.play_file }}
             td
                 .btn-group.pull-right
                     button.btn.btn-default(ng-click="runJob(job)"): i.fa.fa-fw.fa-play
+                    button.btn.btn-default(ng-hide="editMode", ng-click="editMode = true; editJob(job)")
+                        | Edit Job
+                    button.btn.btn-warning(ng-show="editMode", ng-click="editMode = false; save(job)")
+                        | Save Job
                     button.btn.btn-danger(data-toggle='modal', data-target="#mvrDisplayModal{{$index}}"): i.fa.fa-trash-o.fa-fw
 
                     div(id="mvrDisplayModal{{$index}}", class="modal fade")
